@@ -1,12 +1,13 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const keys = require('../config/keys')
 
 /*
- * This module configures different Passport Strategies.
+ * This module configures different oAuth Passport Strategies.
  */
 
- // Google oAuth strategy
+ // Google Strategy
 passport.use(new GoogleStrategy({
 	clientID: keys.google.client_id,
 	clientSecret: keys.google.client_secret,
@@ -17,3 +18,16 @@ passport.use(new GoogleStrategy({
 	console.log(refreshToken)
 	console.log('profile', profile)
 }));
+
+
+// Facebook Strategy
+passport.use(new FacebookStrategy({
+	clientID: keys.facebook.client_id,
+	clientSecret: keys.facebook.client_secret,
+	callbackURL: '/auth/facebook/callback',
+	profileFields: ['id', 'displayName', 'photos', 'email']
+}, (accessToken, refreshToken, profile, cb) => {
+	console.log(accessToken);
+	console.log(refreshToken);
+	console.log(profile);
+})) 
