@@ -8,7 +8,7 @@ const passport = require('passport');
 module.exports = app => {
 	// Google oAuth end-point
 	app.get('/auth/google', passport.authenticate('google', 
-		{scope: ['profile']}));
+		{scope: ['profile', 'email']}));
 
 	//Google oAuth callback end-point
 	app.get('/auth/google/callback', passport.authenticate('google'));

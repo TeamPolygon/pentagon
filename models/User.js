@@ -15,6 +15,6 @@ const user_schema = new Schema({
 
 /*
  * Notifying mongoose about our new schema. If it already exists,
- * mongoose is not going to duplicate it.
+ * mongoose will not duplicate it.
  */
  mongoose.model('users', user_schema);
