@@ -20,9 +20,7 @@ require('./routes/authRoutes')(app)
  * Setting up mongoDB.
  */
 
- mongoose.connect(keys.mongodb.uri).then(res => {
- 	console.log(res);
- }).catch(err => {
+ mongoose.connect(keys.mongodb.uri).catch(err => {
  	console.log(err);
  });
 

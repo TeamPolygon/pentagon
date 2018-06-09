@@ -10,6 +10,17 @@ const User = mongoose.model('users');
  * This module configures different oAuth Passport Strategies.
  */
 
+//Defining serialization for the user logged-in
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+
+// Defining deserialization for the user logged-in
+passport.deserializeUser((id, done) => {
+	User.findById(id).then(user => {
+		done(null, user);
+	})
+})
 
 
 // Google Strategy

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const {
+	Schema
+} = mongoose;
 
 /*
  * This module sets the schema for User collection inside
@@ -17,4 +19,4 @@ const user_schema = new Schema({
  * Notifying mongoose about our new schema. If it already exists,
  * mongoose will not duplicate it.
  */
- mongoose.model('users', user_schema);
+mongoose.model('users', user_schema);
