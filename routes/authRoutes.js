@@ -13,7 +13,7 @@ module.exports = app => {
 	//enabling cookie properties for our Express app.
 	app.use(cookie_session({
 		maxAge: 30 * 24 * 60 * 60 * 1000,
-		keys: [keys.cookies.key] 
+		keys: [keys.cookies.key]
 	}));
 
 	//initializing the passport middleware.
@@ -21,7 +21,7 @@ module.exports = app => {
 
 	//enabling sessions for our application.
 	app.use(passport.session());
-	
+
 
 	// Google oAuth end-point
 	app.get('/auth/google', passport.authenticate('google', {
@@ -36,6 +36,12 @@ module.exports = app => {
 
 	//Facebook oAuth callback end-point
 	app.get('/auth/facebook/callback', passport.authenticate('facebook'));
+
+	//defining logout endpoint
+	app.get('/logout', (req, res) => {
+		req.logout();
+		res.send(req.user);
+	})
 
 	//defining a testing end-point for user login
 	app.get('/api/current_user', (req, res) => {
