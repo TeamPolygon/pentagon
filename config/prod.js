@@ -5,23 +5,21 @@
 
 module.exports = {
     google: {
-          client_id: "228071322517-391dcbtfqkvkg5r00014bdr51rnnhf07.apps.googleusercontent.com",
-          client_secret: "guit7C77uzvZ6cYMKorKrEPd"
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          client_secret: process.env.GOOGLE_CLIENT_SECRET
     },
 
     facebook: {
-          client_id: "230850987504172",
-          client_secret: "110ae117403a8c758f4f85de4c6e5499"
+          client_id: process.env.FACEBOOK_CLIENT_ID,
+          client_secret: process.env.FACEBOOK_CLIENT_SECRET
     },
 
     mongodb: {
-          username: "pentagonadmin",
-          password: "a5UDR8g%A_b>*U",
-          uri: "mongodb://pentagonadmin:a5UDR8g%A_b>*U@ds153980.mlab.com:53980/pentagon-prod"
+          uri: process.env.MONGO_URI
     },
 
     cookies: {
-          key: "LCJb`\s2ts6@?t*t#x_8ZB!"
+          key: process.env.COOKIE_KEY
     }
 }
 
