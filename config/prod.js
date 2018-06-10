@@ -22,5 +22,3 @@ module.exports = {
           key: process.env.COOKIE_KEY
     }
 }
-
-
