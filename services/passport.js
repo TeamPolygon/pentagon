@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
 	clientSecret: keys.google.client_secret,
 	callbackURL: '/auth/google/callback',
 	proxy: true
-}, (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
 
 	/*
 	 * the accessToken is the response code we recieve from google,
@@ -41,24 +41,23 @@ passport.use(new GoogleStrategy({
 	//generating unique hash for the profile
 	const unique_hash = new Hashes.SHA1().b64(profile.id);
 
-	User.findOne({
+	const existingUser = await User.findOne({
 		user_id: unique_hash,
 		service: profile.provider
-	}).then((existingUser) => {
-		if (existingUser) {
-			done(null, existingUser);
-		} else {
-			new User({
-				user_id: profile.id,
-				name: profile.displayName,
-				service: profile.provider
-			}).save().then(user => {
-				done(null, user);
-			})
-		}
-	})
-}));
+	});
 
+
+	if (existingUser) {
+		return done(null, existingUser);
+	}
+	const user = await new User({
+		user_id: profile.id,
+		name: profile.displayName,
+		service: profile.provider
+	}).save();
+
+	return done(null, user);
+}));
 
 // Facebook Strategy
 passport.use(new FacebookStrategy({
@@ -67,7 +66,7 @@ passport.use(new FacebookStrategy({
 	callbackURL: '/auth/facebook/callback',
 	profileFields: ['id', 'displayName', 'photos', 'email'],
 	proxy: true
-}, (accessToken, refreshToken, profile, cb) => {
+}, async (accessToken, refreshToken, profile, cb) => {
 
 	/*
 	 * the accessToken is the response code we recieve from facebook,
@@ -76,23 +75,23 @@ passport.use(new FacebookStrategy({
 	 * user from our mongoDB. If the user doesn't exist, we create one.
 	 */
 
-	//generating a unique hash for the profile
+	//generating unique hash for the profile
 	const unique_hash = new Hashes.SHA1().b64(profile.id);
 
-	User.findOne({
+	const existingUser = await User.findOne({
 		user_id: unique_hash,
 		service: profile.provider
-	}).then((existingUser) => {
-		if (existingUser) {
-			cb(null, existingUser)
-		} else {
-			new User({
-				user_id: profile.id,
-				name: profile.displayName,
-				service: profile.provider
-			}).save().then(user => {
-				cb(null, user);
-			})
-		}
-	})
+	});
+
+
+	if (existingUser) {
+		return cb(null, existingUser);
+	}
+	const user = await new User({
+		user_id: profile.id,
+		name: profile.displayName,
+		service: profile.provider
+	}).save();
+
+	return cb(null, user);
 }));
