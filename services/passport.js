@@ -27,7 +27,8 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
 	clientID: keys.google.client_id,
 	clientSecret: keys.google.client_secret,
-	callbackURL: '/auth/google/callback'
+	callbackURL: '/auth/google/callback', 
+	proxy: true
 }, (accessToken, refreshToken, profile, done) => {
 
 	/*
@@ -64,7 +65,8 @@ passport.use(new FacebookStrategy({
 	clientID: keys.facebook.client_id,
 	clientSecret: keys.facebook.client_secret,
 	callbackURL: '/auth/facebook/callback',
-	profileFields: ['id', 'displayName', 'photos', 'email']
+	profileFields: ['id', 'displayName', 'photos', 'email'],
+	proxy: true
 }, (accessToken, refreshToken, profile, cb) => {
 
 	/*
